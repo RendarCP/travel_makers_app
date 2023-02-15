@@ -3,10 +3,12 @@ import styled from "@emotion/styled";
 
 // style
 import { ButtonGoImage, Divider, Text } from "../style/style";
+
 // image
 import Star from "../static/images/ic-star.svg";
 import TagImage from "../static/images/tag-icon.svg";
 import GoImage from "../static/images/go-text.svg";
+import Time from "../static/images/timesale.svg";
 
 const Container = styled.div`
   display: flex;
@@ -85,11 +87,23 @@ const ContentTimeDeal = styled.span`
   display: flex;
   position: absolute;
   align-items: center;
+  justify-content: space-between;
   width: calc(50% - 39px);
   top: 0px;
   right: 0px;
   padding: 10px 14px;
   background-color: rgb(3, 147, 110);
+`;
+
+const TimeDealLeft = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const TimeDealText = styled.span`
+  color: #fff;
+  margin-left: 8px;
 `;
 
 const ContentTitle = styled.span`
@@ -143,7 +157,13 @@ const HotelCard = () => {
           <ImageRightLabel>성수역 3분거리</ImageRightLabel>
         </ImageWrap>
         <ContentWrap>
-          <ContentTimeDeal>상위타이틀</ContentTimeDeal>
+          <ContentTimeDeal>
+            <TimeDealLeft>
+              <img alt="time" src={Time} />
+              <TimeDealText>3,446명이 예약한 호텔 타임세일</TimeDealText>
+            </TimeDealLeft>
+            <TimeDealText>23 : 04 : 31</TimeDealText>
+          </ContentTimeDeal>
 
           <TagWrap>
             <Tag>#레이블</Tag>

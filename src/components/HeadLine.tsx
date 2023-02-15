@@ -18,6 +18,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 16px;
+  width: 100%;
+  max-width: 1024px;
   @media screen and (max-width: 500px) {
   }
 `;
@@ -104,7 +106,21 @@ const NewText = styled.span`
   font-size: 20px;
 `;
 
-const HeadLine = ({ banner }: any) => {
+interface HeadLineProps {
+  banner: BannerType;
+  handlePrevious: () => void;
+  handleNext: () => void;
+  slideIndex: number;
+  total: number;
+}
+
+const HeadLine = ({
+  banner,
+  handlePrevious,
+  handleNext,
+  slideIndex,
+  total,
+}: HeadLineProps) => {
   const {
     depth,
     description,
@@ -119,13 +135,14 @@ const HeadLine = ({ banner }: any) => {
     tags,
     view,
   } = banner;
+
   return (
     <Container>
       <ProgressWrap>
-        <ProgressText>0/0</ProgressText>
+        <ProgressText>{`${slideIndex + 1} / ${total}`}</ProgressText>
         <div style={{ display: "flex" }}>
-          <ProgressBtn alt="prev button" src={prev} />
-          <ProgressBtn alt="next button" src={next} />
+          <ProgressBtn alt="prev button" src={prev} onClick={handlePrevious} />
+          <ProgressBtn alt="next button" src={next} onClick={handleNext} />
         </div>
       </ProgressWrap>
       <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
