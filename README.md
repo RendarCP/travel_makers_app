@@ -38,9 +38,21 @@
    ```shell
    yarn add axios
    ```
-5. 컴포넌트 정리
+5. Slider 구현을 위해 react-slick 컴포넌트 사용
+   - Slider 구현
+   ```shell
+   yarn add react-slick
+   ```
+   - 관련 css 모듈
+   ```shell
+   slick-carousel
+   ```
+6. 컴포넌트 정리
    - Header
    - HeadLine
    - CardView
 
 ## 실행 방법
+
+1. yarn
+2. yarn start
