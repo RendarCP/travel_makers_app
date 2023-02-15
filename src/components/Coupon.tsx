@@ -18,6 +18,10 @@ const CouponContainer = styled.div`
   cursor: pointer;
   text-decoration: none;
   overflow: hidden;
+  @media screen and (max-width: 600px) {
+    height: 144px;
+    padding: 0px 20px;
+  }
 `;
 
 const CouponWrap = styled.div`
@@ -40,6 +44,9 @@ const CouponLeft = styled.div`
 
 const CouponRight = styled.div`
   width: 494px;
+  @media screen and (max-width: 600px) {
+    width: 200px;
+  }
 `;
 
 const CouponText = styled.div`
@@ -47,6 +54,10 @@ const CouponText = styled.div`
   font-size: 32px;
   color: #30373f;
   margin-bottom: 8px;
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+    font-weight: 700;
+  }
 `;
 
 const CouponButton = styled.div`
@@ -57,12 +68,20 @@ const CouponButton = styled.div`
   background: #03936e;
   width: fit-content;
   color: #ffffff;
+  @media screen and (max-width: 600px) {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
 `;
 
 const ButtonImage = styled.img`
   width: 24px;
   height: 24px;
   margin-left: 6px;
+  @media screen and (max-width: 600px) {
+    width: 8px;
+    height: 8px;
+  }
 `;
 
 interface CouponProps {

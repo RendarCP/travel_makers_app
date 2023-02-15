@@ -1,9 +1,13 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-// style
-import { ButtonGoImage } from "../style/style";
+// component
+import Spacer from "./Spacer";
 
+// style
+import { ButtonGoImage, ProgressText, ProgressBtn } from "../style/style";
+
+// type
 import { BannerType } from "../types";
 
 // img
@@ -32,22 +36,6 @@ const ProgressWrap = styled.div`
   padding: 14px 0px;
 `;
 
-const ProgressBtn = styled.img`
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  margin-left: 10px;
-`;
-
-const ProgressText = styled.div`
-  font-family: "PT Serif", serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-  margin-right: 16px;
-  letter-spacing: 1.6px;
-`;
-
 const HeadLineWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -58,28 +46,36 @@ const HeadLineWrap = styled.div`
   box-shadow: rgb(48 55 63 / 20%) 4px 4px 20px 0px;
   background-color: rgb(255, 255, 255);
   background: #ffffff;
+  @media screen and (max-width: 600px) {
+    padding: 24px;
+  }
 `;
 
 const SubHeadLine = styled.span`
-  font-family: "Noto Serif KR";
-  font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 24px;
   margin-bottom: 10px;
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `;
 
 const HeadLineText = styled.span`
-  font-family: "Noto Serif KR";
-  font-style: normal;
   font-weight: 600;
   font-size: 32px;
   line-height: 44px;
+  @media screen and (max-width: 600px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
 `;
 
 const BottomWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Description = styled.span`
@@ -88,6 +84,10 @@ const Description = styled.span`
   font-size: 18px;
   line-height: 24px;
   color: #03936e;
+  @media screen and (max-width: 600px) {
+    font-size: 12px;
+    line-height: 20px;
+  }
 `;
 
 const NewTextWrap = styled.div`
@@ -141,8 +141,13 @@ const HeadLine = ({
       <ProgressWrap>
         <ProgressText>{`${slideIndex + 1} / ${total}`}</ProgressText>
         <div style={{ display: "flex" }}>
-          <ProgressBtn alt="prev button" src={prev} onClick={handlePrevious} />
-          <ProgressBtn alt="next button" src={next} onClick={handleNext} />
+          <ProgressBtn onClick={handlePrevious}>
+            <img alt="prev-button" src={prev} />
+          </ProgressBtn>
+          <Spacer left={8} />
+          <ProgressBtn onClick={handleNext}>
+            <img alt="next-button" src={next} />
+          </ProgressBtn>
         </div>
       </ProgressWrap>
       <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>

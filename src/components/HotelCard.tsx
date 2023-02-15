@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+
+import {
+  getValueByPricing,
+  getValueByTimeDiff,
+  getValueByTimeZero,
+} from "../modules";
 
 // style
 import { ButtonGoImage, Divider, Text } from "../style/style";
@@ -9,6 +15,7 @@ import Star from "../static/images/ic-star.svg";
 import TagImage from "../static/images/tag-icon.svg";
 import GoImage from "../static/images/go-text.svg";
 import Time from "../static/images/timesale.svg";
+import { HotelType } from "../types";
 
 const Container = styled.div`
   display: flex;
@@ -16,6 +23,7 @@ const Container = styled.div`
   justify-content: center;
   padding-top: 28px;
   margin-top: 30px;
+  position: relative;
 `;
 
 const ImageWrap = styled.div`
@@ -30,6 +38,12 @@ const ImageWrap = styled.div`
   position: absolute;
   bottom: 30px;
   width: calc(50% - 11px);
+  @media screen and (max-width: 500px) {
+    top: -60px;
+    left: 22px;
+    width: calc(100% - 45px);
+    height: 179px;
+  }
 `;
 
 const ImageLabelWrap = styled.span`
@@ -64,22 +78,30 @@ const CardWrap = styled.div`
   box-shadow: rgb(0 0 0 / 20%) 0px 4px 20px 0px;
   background-color: rgb(255, 255, 255);
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    padding: 160px 20px 50px 20px;
+  }
 `;
 
 const ContentWrap = styled.div`
   display: flex;
   flex-direction: column;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const TagWrap = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 10px;
 `;
 
 const Tag = styled.span`
   border: 1px solid #b6b6b6;
   border-radius: 100px;
   padding: 5px 12px;
+  font-size: 12px;
   color: #b6b6b6;
 `;
 
@@ -93,6 +115,11 @@ const ContentTimeDeal = styled.span`
   right: 0px;
   padding: 10px 14px;
   background-color: rgb(3, 147, 110);
+  @media screen and (max-width: 500px) {
+    width: calc(100% - 73px);
+    top: 112px;
+    right: 23px;
+  }
 `;
 
 const TimeDealLeft = styled.div`
@@ -104,6 +131,7 @@ const TimeDealLeft = styled.div`
 const TimeDealText = styled.span`
   color: #fff;
   margin-left: 8px;
+  font-size: 12px;
 `;
 
 const ContentTitle = styled.span`
@@ -111,10 +139,15 @@ const ContentTitle = styled.span`
   font-size: 18px;
   line-height: 24px;
   margin-top: 12px;
+  color: #30373f;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 
 const RatingWrap = styled.div`
   display: flex;
+  align-items: center;
   margin-top: 12px;
   gap: 10px;
 `;
@@ -138,9 +171,46 @@ const ButtonWrap = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 
-const HotelCard = () => {
+interface HotelCardProps {
+  hotel: HotelType;
+}
+
+const HotelCard = ({ hotel }: HotelCardProps) => {
+  const {
+    type,
+    hotel_id,
+    hotel_price_scheme,
+    star,
+    first_image_position_y,
+    image,
+    name,
+    description,
+    subway_station,
+    tags,
+    events,
+    price,
+    coupons,
+    timesale,
+  } = hotel;
+
+  const [time, setTime] = useState<any>({});
+
+  useEffect(() => {
+    setInterval(() => {
+      const time = getValueByTimeDiff(timesale[0]?.end_at);
+      setTime(time);
+    }, 1000);
+  }, [timesale]);
+
+  const mainPrice = price.price[0]?.sale_price;
+  const totalPrice = price.price[0]?.min_night * price.price[0]?.price;
+  const salePrice = price.price[0]?.min_night * price.price[0]?.sale_price;
+
   return (
     <Container>
       <CardWrap>
@@ -148,36 +218,43 @@ const HotelCard = () => {
           <img
             alt="hotel-view"
             style={{ width: "100%", height: "100%" }}
-            src="https://d2pyzcqibfhr70.cloudfront.net/images/0/2022-08-12/gCmzkC7XjVHxdvLBEq1JR3erXLVIj1H76afgZETI.png"
+            src={image}
           />
           <ImageLabelWrap>
-            <Label color="green">레이블</Label>
-            <Label color="blue">레이블</Label>
+            {events.map((event) => {
+              return <Label color="#03936E">{event}</Label>;
+            })}
           </ImageLabelWrap>
-          <ImageRightLabel>성수역 3분거리</ImageRightLabel>
+          <ImageRightLabel>{description}</ImageRightLabel>
         </ImageWrap>
         <ContentWrap>
-          <ContentTimeDeal>
-            <TimeDealLeft>
-              <img alt="time" src={Time} />
-              <TimeDealText>3,446명이 예약한 호텔 타임세일</TimeDealText>
-            </TimeDealLeft>
-            <TimeDealText>23 : 04 : 31</TimeDealText>
-          </ContentTimeDeal>
+          {timesale.length > 0 && (
+            <ContentTimeDeal>
+              <TimeDealLeft>
+                <img alt="time" src={Time} />
+                <TimeDealText>{timesale[0]?.remaining}</TimeDealText>
+              </TimeDealLeft>
+              <TimeDealText>
+                {time?.dd}일 {`${getValueByTimeZero(time?.hh)}${time?.hh}`} :{" "}
+                {`${getValueByTimeZero(time?.mm)}${time?.mm}`} :{" "}
+                {`${getValueByTimeZero(time?.ss)}${time?.ss}`}
+              </TimeDealText>
+            </ContentTimeDeal>
+          )}
 
           <TagWrap>
-            <Tag>#레이블</Tag>
-            <Tag>#레이블</Tag>
-            <Tag>#레이블</Tag>
+            {tags.map((tag) => {
+              return <Tag>{tag}</Tag>;
+            })}
           </TagWrap>
 
-          <ContentTitle>호텔 이름</ContentTitle>
+          <ContentTitle>{name}</ContentTitle>
 
           <RatingWrap>
             <img alt="star" src={Star} />
-            <div>5성급</div>
+            <Text color="#6E7378">{star}성급</Text>
             <Divider />
-            <div>호텔</div>
+            <Text color="#6E7378">호텔</Text>
           </RatingWrap>
 
           <div style={{ borderBottom: "2px solid gray", marginTop: 45 }}></div>
@@ -186,19 +263,23 @@ const HotelCard = () => {
             <PricingContainer>
               <PriceWrap>
                 <Text>정가</Text>
-                <Text decoration="line-through">000,000원</Text>
-                <img alt="coupon" src={TagImage} />
+                <Text decoration="line-through">
+                  {getValueByPricing(totalPrice)}원
+                </Text>
+                {price?.is_coupon && <img alt="coupon" src={TagImage} />}
               </PriceWrap>
 
               <PriceWrap>
-                <Text size="18px" weight={700} color="#DA5542">
-                  00%
+                <Text size="18px" mediaSize="16px" weight={700} color="#DA5542">
+                  {price?.price[0]?.discount}%
                 </Text>
-                <Text size="24px" weight={700}>
-                  000,000원 ~
+                <Text size="24px" mediaSize="22px" weight={700}>
+                  {getValueByPricing(salePrice)}원 ~
                 </Text>
                 <Divider />
-                <Text color="#616161">1박 000,000원 부터</Text>
+                <Text color="#616161">
+                  1박 {getValueByPricing(mainPrice)}원 부터
+                </Text>
               </PriceWrap>
             </PricingContainer>
 
