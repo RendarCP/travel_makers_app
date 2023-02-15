@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { StringLiteral } from "typescript";
+
+const FlexCenterWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Divider = styled.span`
   display: block;
@@ -19,11 +24,39 @@ const Text = styled.span<{
   weight?: number | string;
   decoration?: string;
   color?: string;
+  mediaSize?: number | string;
 }>`
   font-size: ${(props) => (props.size ? props.size : "12px")};
   font-weight: ${(props) => (props.weight ? props.weight : "400")};
   text-decoration: ${(props) => (props.decoration ? props.decoration : "none")};
   color: ${(props) => (props.color ? props.color : "#000000")};
+  @media screen and (max-width: 1000px) {
+    font-size: ${(props) => (props.mediaSize ? props.mediaSize : "12px")};
+  }
 `;
 
-export { Divider, ButtonGoImage, Text };
+const ProgressText = styled.div`
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1.6px;
+`;
+
+const ProgressBtn = styled.button`
+  // width: 40px;
+  // height: 40px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  &:hover {
+  }
+`;
+
+export {
+  Divider,
+  ButtonGoImage,
+  Text,
+  ProgressText,
+  ProgressBtn,
+  FlexCenterWrap,
+};
