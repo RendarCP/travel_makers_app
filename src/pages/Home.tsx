@@ -31,7 +31,7 @@ const Container = styled.div`
 const BannerContainer = styled.div`
   height: 650px;
   @media screen and (max-width: 600px) {
-    height: ;
+    height: 450px;
   }
 `;
 
@@ -39,7 +39,7 @@ const Banner = styled.div`
   height: 530px;
 `;
 
-const BannerImage = styled.div<{ url: string }>`
+const BannerImage = styled.div<{ url: string; mobile: string }>`
   display: block;
   position: absolute;
   width: 100%;
@@ -48,6 +48,10 @@ const BannerImage = styled.div<{ url: string }>`
   background-image: url(${(props) => props?.url});
   background-size: cover;
   background-position: center center;
+  @media screen and (max-width: 600px) {
+    background-image: url(${(props) => props?.mobile});
+    height: 340px;
+  }
 `;
 
 const SliderWrap = styled.div`
@@ -192,7 +196,10 @@ const Home = () => {
             return (
               <BannerContainer>
                 <Banner key={banner.hotel_id}>
-                  <BannerImage url={banner.images} />
+                  <BannerImage
+                    url={banner.images}
+                    mobile={banner.mobile_images}
+                  />
                   {/* <TestImage src={banner.images} /> */}
                 </Banner>
                 <BannerWrap>

@@ -72,7 +72,7 @@ const ProgressBar = styled.div`
   transition: none 5s linear 0s;
 `;
 
-const HeadLineWrap = styled.div`
+const HeadLineWrap = styled.a`
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -174,15 +174,6 @@ const HeadLine = ({
     view,
   } = banner;
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     const width = (100 / total) * (slideIndex + 1);
-  //     setProgress(width);
-  //   }, 100);
-  // }, [slideIndex]);
-
-  console.log("width", width);
-
   return (
     <Container>
       <ProgressWrap>
@@ -215,7 +206,7 @@ const HeadLine = ({
           </NewTextWrap>
         ) : null}
 
-        <HeadLineWrap>
+        <HeadLineWrap target="_blank" onClick={() => window.open(link)}>
           <SubHeadLine>{description}</SubHeadLine>
 
           <HeadLineText>{name}</HeadLineText>
