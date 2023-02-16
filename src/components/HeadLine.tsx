@@ -14,7 +14,6 @@ import { BannerType } from "../types";
 import GoImage from "../static/images/go-text.svg";
 import next from "../static/images/btn-next-icon.svg";
 import prev from "../static/images/btn-prev-icon.svg";
-import { useSearchParams } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
