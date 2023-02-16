@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 // component
@@ -14,6 +14,7 @@ import { BannerType } from "../types";
 import GoImage from "../static/images/go-text.svg";
 import next from "../static/images/btn-next-icon.svg";
 import prev from "../static/images/btn-prev-icon.svg";
+import { useSearchParams } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
@@ -34,6 +35,41 @@ const ProgressWrap = styled.div`
   align-items: center;
   width: 100%;
   padding: 14px 0px;
+`;
+
+const ProgressLeft = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const ProgressBarWrap = styled.div`
+  display: block;
+  position: relative;
+  width: 30vw;
+  height: 2px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.5);
+`;
+
+// const ProgressBar = styled.div<{ width: number }>`
+//   display: block;
+//   position: absolute;
+//   width: ${(props) => props.width}%;
+//   transition: width 3s linear 0s;
+//   height: 2px;
+//   border-radius: 3px;
+//   background-color: white;
+// `;
+
+const ProgressBar = styled.div`
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 0%;
+  border-radius: 3px;
+  background-color: white;
+  transition: none 5s linear 0s;
 `;
 
 const HeadLineWrap = styled.div`
@@ -112,6 +148,7 @@ interface HeadLineProps {
   handleNext: () => void;
   slideIndex: number;
   total: number;
+  width?: number;
 }
 
 const HeadLine = ({
@@ -120,6 +157,7 @@ const HeadLine = ({
   handleNext,
   slideIndex,
   total,
+  width,
 }: HeadLineProps) => {
   const {
     depth,
@@ -136,10 +174,30 @@ const HeadLine = ({
     view,
   } = banner;
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     const width = (100 / total) * (slideIndex + 1);
+  //     setProgress(width);
+  //   }, 100);
+  // }, [slideIndex]);
+
+  console.log("width", width);
+
   return (
     <Container>
       <ProgressWrap>
-        <ProgressText>{`${slideIndex + 1} / ${total}`}</ProgressText>
+        <ProgressLeft>
+          <ProgressText>{`${slideIndex + 1} / ${total}`}</ProgressText>
+          <ProgressBarWrap>
+            {/* <ProgressBar width={(100 / total) * (slideIndex + 1)} /> */}
+            <ProgressBar
+              style={{
+                width: `${width}%`,
+                transition: `${width ? "width" : "none"} 5s linear 0s`,
+              }}
+            />
+          </ProgressBarWrap>
+        </ProgressLeft>
         <div style={{ display: "flex" }}>
           <ProgressBtn onClick={handlePrevious}>
             <img alt="prev-button" src={prev} />

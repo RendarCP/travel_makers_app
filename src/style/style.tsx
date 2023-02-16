@@ -30,7 +30,7 @@ const Text = styled.span<{
   font-weight: ${(props) => (props.weight ? props.weight : "400")};
   text-decoration: ${(props) => (props.decoration ? props.decoration : "none")};
   color: ${(props) => (props.color ? props.color : "#000000")};
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 600px) {
     font-size: ${(props) => (props.mediaSize ? props.mediaSize : "12px")};
   }
 `;
@@ -40,6 +40,9 @@ const ProgressText = styled.div`
   font-weight: 700;
   color: white;
   letter-spacing: 1.6px;
+  @media screen and (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 const ProgressBtn = styled.button`

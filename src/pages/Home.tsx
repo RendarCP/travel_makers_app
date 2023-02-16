@@ -165,7 +165,7 @@ const Home = () => {
     dots: false,
     infinite: true,
     fade: true,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 5000,
     speed: 500,
     slidesToShow: 1,
@@ -202,6 +202,7 @@ const Home = () => {
                     handlePrevious={handlePrevious}
                     handleNext={handleNext}
                     banner={banner}
+                    width={(100 / banners.length) * (bannerIndex + 1)}
                   />
                 </BannerWrap>
               </BannerContainer>
